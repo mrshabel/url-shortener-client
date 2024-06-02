@@ -6,12 +6,17 @@ export async function shortenURL(
     prevState: any,
     formData: FormData
 ): Promise<ShortenURL> {
-    const url = formData.get("url");
+    let url = formData.get("url") as string;
     if (!url) {
         return {
             status: "error",
             message: "No url provided",
         };
+    }
+
+    // add default url protocol as https
+    if (!(url.startsWith("https://") || url.startsWith("http://"))) {
+        url = "https://" + url;
     }
 
     // validate url
@@ -23,7 +28,6 @@ export async function shortenURL(
             message: "Invalid url provided",
         };
     }
-
     // make request to server
     try {
         const res = await fetch(process.env.URL_SHORTENER_BACKEND_HOST!, {

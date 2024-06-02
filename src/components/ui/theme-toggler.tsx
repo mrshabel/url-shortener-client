@@ -8,13 +8,20 @@ import { Button } from "@/components/ui/button";
 
 export function ThemeToggler() {
     const { theme, setTheme } = useTheme();
+    const [isPending, startTransition] = React.useTransition();
 
     return (
         <Button size={"icon"} variant={"ghost"} className="hover-none">
             {theme === "light" ? (
-                <Sun className="size-4" onClick={() => setTheme("dark")} />
+                <Sun
+                    className="size-4"
+                    onClick={() => startTransition(() => setTheme("dark"))}
+                />
             ) : (
-                <Moon className="size-4" onClick={() => setTheme("light")} />
+                <Moon
+                    className="size-4"
+                    onClick={() => startTransition(() => setTheme("light"))}
+                />
             )}
         </Button>
     );
