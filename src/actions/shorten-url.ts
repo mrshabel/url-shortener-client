@@ -39,7 +39,10 @@ export async function shortenURL(
         });
 
         if (!res.ok) {
-            throw new Error("Failed to fetch");
+            return {
+                status: "error",
+                message: "Failed to fetch",
+            };
         }
         const data = await res.json();
         return {
